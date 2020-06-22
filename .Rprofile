@@ -1,4 +1,4 @@
-source("renv/activate.R")
+# source("renv/activate.R")
 options(
   servr.daemon = TRUE, blogdown.yaml.empty = FALSE,
   blogdown.publishDir = '../aaron-public',  blogdown.author = "Aaron Simumba"
