@@ -1,105 +1,49 @@
-# Site settings
-baseURL = "https://asimumba.rbind.io/"
-languageCode = "en-US"
-title = "Data Science. R. Stock Markets"
-theme = "hugo-split-theme"
-disableKinds = ["section", "taxonomy", "taxonomyTerm", "RSS", "sitemap"]
+# Title of your site
+title = ""
 
-# Enter your tracking code to enable Google Analytics
+# The URL of your site.
+# End your URL with a `/` trailing slash, e.g. `https://example.com/`.
+baseurl = "https://asimumba.rbind.io/"
+
+# Name the theme folder in `themes/`.
+theme = "hugo-graphite"
+
+# Enable analytics by entering your Google Analytics tracking ID
 googleAnalytics = "UA-101235795-1"
 
-# Copyright
-copyright = "&copy;2020 Aaron Simumba"
+relativeurls = false
+languageCode = "en-us"
+description = "An opinionated collection of R packages designed for data science."
+disqusShortname = ""
+ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
+# below is critical for non-authors to show up in article listing
+preserveTaxonomyNames = true
+# uncomment the next line to disable listing authors
+# disableKinds = ["taxonomyTerm"]
 
-ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
-[params]
+[permalinks]
+  blog = "blog/:year/:month/:slug/"
 
-  # Metadata for search engines and social sharing
-  author = "Aaron Simumba"
-  description = ""
-  shareImage = "images/social.jpg"
-  twitterHandle = "asimumba_"
+[taxonomies]
+  author = "author"
+  category = "categories"
+  tag = "tags"
 
-  # Favicon
-  favicon = "favicon.ico"
+# Configure BlackFriday Markdown rendering.
+#   See: https://gohugo.io/getting-started/configuration/#configure-blackfriday
+[blackfriday]
+  hrefTargetBlank = true  # `true` opens external links in a new tab. See https://github.com/gohugoio/hugo/issues/2424
+	angledQuotes = false
+	latexDashes = true
+  extensions = ["backslashLineBreak"]
 
-  # Section - Visual
-  [params.visual]
-
-    # Image
-    [params.visual.image]
-      enable = true
-      file = "images/background.jpg"
-      position = "center center"
-
-    # Video
-    [params.visual.video]
-      enable = false
-      mute = true
-      file = "videos/background.mp4"
-      #youtubeId = "UCpeLQRVt3O0kdecIrQpDibg"
-
-  # Links
-  #
-  # Links List #1
-  [[params.links]]
-    [params.links.list1]
-      heading = "Connect"
-
-      [[params.links.list1.link]]
-        text = "Blog"
-        url = "https://zedr.rbind.io/"
-
-      [[params.links.list1.link]]
-        text = "Email"
-        url = "simumbaa21@gmail.com"
-        
-    
-      [[params.links.list1.link]]
-        text = "Github"
-        url = "https://github.com/asimumba"
-        
-      [[params.links.list1.link]]
-        text = "LinkedIn"
-        url = "https://www.linkedin.com/in/aaronsimumba/"
-  
-    # Links List #3
-  [[params.links]]
-    [params.links.list3]
-      heading = "Projects"
-
-      [[params.links.list3.link]]
-        text = "COVID-19 Trend Analysis"
-        url = "https://github.com/asimumba/covid-19"
-        
-      [[params.links.list3.link]]
-        text = "Data-Driven Entrepreneurship Viz"
-        url = "https://bongohive.co.zm/data-driven-entrepreneurship/"
-
-      [[params.links.list3.link]]
-        text = "African Stock Markets"
-        url = "https://zedr.rbind.io/2018/11/07/african-markets-indices-tracker/"
-
-      [[params.links.list3.link]]
-        text = "Data Extraction"
-        url = "https://zedr.rbind.io/2017/10/12/breathing-life-back-into-pdf-presented-data/"
-
-
-  # Links List #2
-  [[params.links]]
-    [params.links.list2]
-      heading = "Social"
-
-      [[params.links.list2.link]]
-        text = "Twitter"
-        url = "https://twitter.com/asimumba_"
-
-      [[params.links.list2.link]]
-        text = "Instagram"
-        url = "https://www.instagram.com/zedsamurai/?hl=en"
-
-
-  # The original template is released under the Creative Commons Attribution 3.0 License.
-  # Please keep the original attribution link when using for your own project.
-  # If you'd like to use the template without the attribution, you can check out
-  # the license option via the template author's website: https://onepagelove.com/split
+[markup]
+  defaultMarkdownHandler = "goldmark"
+  [markup.tableOfContents]
+    endLevel = 2
+    ordered = false
+    startLevel = 2
+  [markup.goldmark.renderer]
+    unsafe = true
+  [markup.highlight]
+    style = "pygments"

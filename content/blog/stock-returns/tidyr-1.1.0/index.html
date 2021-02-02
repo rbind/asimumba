@@ -1,0 +1,175 @@
+---
+output: hugodown::hugo_document
+  
+title: tidyr 1.1.0
+date: 2020-05-26
+author: Hadley Wickham
+description: >
+    tidyr 1.1.0 includes a bunch of quality of life improvements, particularly
+    for pivoting and rectangling.
+
+photo:
+  url: https://unsplash.com/photos/__ZMnefoI3k
+  author: Jan Vasek
+
+# one of: "deep-dive", "learn", "package", "programming", or "other"
+categories: [package] 
+tags: [tidyr]
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+
+
+<p>We’re delighted to announce that <a href="http://tidyr.tidyverse.org/">tidyr</a> 1.1.0 is now available from CRAN. tidyr provides a set of tools for transforming data frames to and from tidy data, where each variable is a column and each observation is a row. Tidy data is a convention for matching the semantics and structure of your data that makes using the rest of the tidyverse (and many other R packages) much easier.</p>
+<p>You can install install tidyr with:</p>
+<pre class="r"><code>install.packages(&quot;tidyr&quot;)</code></pre>
+<p>This release doesn’t include any major new excitement but it includes a whole passel of minor improvements building on the major changes in <a href="https://www.tidyverse.org/blog/2019/09/tidyr-1-0-0/">tidyr 1.0.0</a>, and generally making everything easier to use and a bit more flexible. In this blog post, I’ll give a quick run down on new pivoting features; see the <a href="https://github.com/tidyverse/tidyr/releases/tag/v1.1.0">full release announcement</a> for the details of other changes.</p>
+<pre class="r"><code>library(tidyr)</code></pre>
+<div id="pivot_longer" class="section level2">
+<h2><code>pivot_longer()</code></h2>
+<ul>
+<li><p><code>pivot_longer()</code> gains a new <code>names_transform</code> argument that allows you to
+transform column names before they turn into data. For example, you can
+use this new argument along with <a href="https://readr.tidyverse.org/reference/parse_number.html"><code>readr::parse_number()</code></a> to
+parse column names that really should be numbers:</p>
+<pre class="r"><code>df &lt;- tibble(id = 1, wk1 = 0, wk2 = 4, wk3 = 9, wk4 = 25)
+df %&gt;% pivot_longer(
+  cols = starts_with(&quot;wk&quot;),
+  names_to = &quot;week&quot;,
+  names_transform = list(week = readr::parse_number),
+)</code></pre>
+<pre><code>## # A tibble: 4 x 3
+##      id  week value
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1     1     1     0
+## 2     1     2     4
+## 3     1     3     9
+## 4     1     4    25</code></pre></li>
+<li><p><code>pivot_longer()</code> can now discard uninformative column names by setting
+<code>names_to = character()</code>, thanks to idea and implementation from
+<a href="https://github.com/mitchelloharawild">Mitch O’Hara Wild</a>:</p>
+<pre class="r"><code>df &lt;- tibble(id = 1:2, fruitful_panda = 3:4, angry_aardvark = 5:6)  
+df %&gt;% pivot_longer(-id, names_to = character())</code></pre>
+<pre><code>## # A tibble: 4 x 2
+##      id value
+##   &lt;int&gt; &lt;int&gt;
+## 1     1     3
+## 2     1     5
+## 3     2     4
+## 4     2     6</code></pre></li>
+<li><p><code>pivot_longer()</code> no longer creates a <code>.copy</code> variable in the presence of
+duplicate column names. This makes it more consistent with the handling
+of non-unique pivot specifications.</p>
+<pre class="r"><code>df &lt;- tibble(id = 1:3, x = 1:3, x = 4:6, .name_repair = &quot;minimal&quot;)  
+df %&gt;% pivot_longer(-id)</code></pre>
+<pre><code>## # A tibble: 6 x 3
+##      id name  value
+##   &lt;int&gt; &lt;chr&gt; &lt;int&gt;
+## 1     1 x         1
+## 2     1 x         4
+## 3     2 x         2
+## 4     2 x         5
+## 5     3 x         3
+## 6     3 x         6</code></pre></li>
+<li><p><code>pivot_longer()</code> automatically disambiguates non-unique outputs, which can
+occur when the input variables include some additional component that you
+don’t care about and want to discard. You can discard parts of column names
+either with <code>names_pattern</code> or with <code>NA</code> in <code>names_to</code>.</p>
+<pre class="r"><code>df &lt;- tibble(id = 1:3, x_1 = 1:3, y_2 = 4:6, y_3 = 9:11)
+df %&gt;% pivot_longer(-id, names_pattern = &quot;(.)_.&quot;)</code></pre>
+<pre><code>## # A tibble: 9 x 3
+##      id name  value
+##   &lt;int&gt; &lt;chr&gt; &lt;int&gt;
+## 1     1 x         1
+## 2     1 y         4
+## 3     1 y         9
+## 4     2 x         2
+## 5     2 y         5
+## 6     2 y        10
+## 7     3 x         3
+## 8     3 y         6
+## 9     3 y        11</code></pre>
+<pre class="r"><code>df %&gt;% pivot_longer(-id, names_sep = &quot;_&quot;, names_to = c(&quot;name&quot;, NA))</code></pre>
+<pre><code>## # A tibble: 9 x 3
+##      id name  value
+##   &lt;int&gt; &lt;chr&gt; &lt;int&gt;
+## 1     1 x         1
+## 2     1 y         4
+## 3     1 y         9
+## 4     2 x         2
+## 5     2 y         5
+## 6     2 y        10
+## 7     3 x         3
+## 8     3 y         6
+## 9     3 y        11</code></pre>
+<pre class="r"><code>df %&gt;% pivot_longer(-id, names_sep = &quot;_&quot;, names_to = c(&quot;.value&quot;, NA))</code></pre>
+<pre><code>## # A tibble: 6 x 3
+##      id     x     y
+##   &lt;int&gt; &lt;int&gt; &lt;int&gt;
+## 1     1     1     4
+## 2     1    NA     9
+## 3     2     2     5
+## 4     2    NA    10
+## 5     3     3     6
+## 6     3    NA    11</code></pre></li>
+</ul>
+</div>
+<div id="pivot_wider" class="section level2">
+<h2><code>pivot_wider()</code></h2>
+<ul>
+<li><p><code>pivot_wider()</code> gains a <code>names_sort</code> argument which allows you to sort
+column names in order. The default, <code>FALSE</code>, orders columns by their
+first appearance. I’m considering changing the default value to <code>TRUE</code>
+in a future version.</p>
+<pre class="r"><code>df &lt;- tibble(
+  day_int = c(4, 3, 5, 1, 2),
+  day_fac = factor(day_int, labels = c(&quot;Mon&quot;, &quot;Tue&quot;, &quot;Wed&quot;, &quot;Thu&quot;, &quot;Fri&quot;))
+)
+df %&gt;% pivot_wider(
+  names_from = day_fac, 
+  values_from = day_int
+)</code></pre>
+<pre><code>## # A tibble: 1 x 5
+##     Thu   Wed   Fri   Mon   Tue
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1     4     3     5     1     2</code></pre>
+<pre class="r"><code>df %&gt;% pivot_wider(
+  names_from = day_fac,
+  names_sort = TRUE,
+  values_from = day_int
+)</code></pre>
+<pre><code>## # A tibble: 1 x 5
+##     Mon   Tue   Wed   Thu   Fri
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1     1     2     3     4     5</code></pre></li>
+<li><p><code>pivot_wider()</code> gains a <code>names_glue</code> argument that allows you to construct
+output column names with a glue specification when <code>names_to</code> includes
+multiple columns.</p>
+<pre class="r"><code>df &lt;- tibble(
+  first = &quot;a&quot;,
+  second = &quot;1&quot;,
+  third = &quot;X&quot;,
+  val = 1
+)
+df %&gt;% pivot_wider(
+  names_from = c(first, second, third), 
+  values_from = val,
+  names_glue = &quot;{first}.{second}_{third}&quot;
+)</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##   a.1_X
+##   &lt;dbl&gt;
+## 1     1</code></pre></li>
+<li><p><code>pivot_wider()</code> arguments <code>values_fn</code> and <code>values_fill</code> can now be single
+values; you now only need to use a named list if you want to use different
+values for different value columns. You’ll also get better errors if
+they’re not of the correct type.</p></li>
+<li><p>Finally, both <code>pivot_wider()</code> and <code>pivot_longer()</code> are considerably more
+performant, thanks largely to improvements in the underlying vctrs code
+by <a href="http://github.com/DavisVaughan">Davis Vaughn</a>.</p></li>
+</ul>
+</div>
+<div id="acknowledgements" class="section level2">
+<h2>Acknowledgements</h2>
+<p>Thanks to all 135 people who contributed to this version of tidyr by discussing issues and suggesting new code! <a href="https://github.com/abichat">@abichat</a>, <a href="https://github.com/abiyug">@abiyug</a>, <a href="https://github.com/adisarid">@adisarid</a>, <a href="https://github.com/ahmohamed">@ahmohamed</a>, <a href="https://github.com/akikirinrin">@akikirinrin</a>, <a href="https://github.com/albertotb">@albertotb</a>, <a href="https://github.com/alex-pax">@alex-pax</a>, <a href="https://github.com/amirmazmi">@amirmazmi</a>, <a href="https://github.com/andtheWings">@andtheWings</a>, <a href="https://github.com/ashiklom">@ashiklom</a>, <a href="https://github.com/atusy">@atusy</a>, <a href="https://github.com/batpigandme">@batpigandme</a>, <a href="https://github.com/bertrandh">@bertrandh</a>, <a href="https://github.com/BillBlanc">@BillBlanc</a>, <a href="https://github.com/billdenney">@billdenney</a>, <a href="https://github.com/BrianDiggs">@BrianDiggs</a>, <a href="https://github.com/bushdanielkwajaffa">@bushdanielkwajaffa</a>, <a href="https://github.com/cderv">@cderv</a>, <a href="https://github.com/CGMossa">@CGMossa</a>, <a href="https://github.com/cgoo4">@cgoo4</a>, <a href="https://github.com/charliejhadley">@charliejhadley</a>, <a href="https://github.com/chester-gan">@chester-gan</a>, <a href="https://github.com/cimentadaj">@cimentadaj</a>, <a href="https://github.com/cjvanlissa">@cjvanlissa</a>, <a href="https://github.com/cloversleaves">@cloversleaves</a>, <a href="https://github.com/colearendt">@colearendt</a>, <a href="https://github.com/dah33">@dah33</a>, <a href="https://github.com/DanOvando">@DanOvando</a>, <a href="https://github.com/dapperjapper">@dapperjapper</a>, <a href="https://github.com/daranzolin">@daranzolin</a>, <a href="https://github.com/davidhunterwalsh">@davidhunterwalsh</a>, <a href="https://github.com/davisadamw">@davisadamw</a>, <a href="https://github.com/DavisVaughan">@DavisVaughan</a>, <a href="https://github.com/dchiu911">@dchiu911</a>, <a href="https://github.com/dpastoor">@dpastoor</a>, <a href="https://github.com/dpeterson71">@dpeterson71</a>, <a href="https://github.com/dpprdan">@dpprdan</a>, <a href="https://github.com/eantworth">@eantworth</a>, <a href="https://github.com/earcanal">@earcanal</a>, <a href="https://github.com/echasnovski">@echasnovski</a>, <a href="https://github.com/enixam">@enixam</a>, <a href="https://github.com/ericgunnink">@ericgunnink</a>, <a href="https://github.com/florianm">@florianm</a>, <a href="https://github.com/fmmattioni">@fmmattioni</a>, <a href="https://github.com/franzbischoff">@franzbischoff</a>, <a href="https://github.com/GegznaV">@GegznaV</a>, <a href="https://github.com/geotheory">@geotheory</a>, <a href="https://github.com/ggrothendieck">@ggrothendieck</a>, <a href="https://github.com/gregorp">@gregorp</a>, <a href="https://github.com/hadley">@hadley</a>, <a href="https://github.com/HanOostdijk">@HanOostdijk</a>, <a href="https://github.com/henry090">@henry090</a>, <a href="https://github.com/iago-pssjd">@iago-pssjd</a>, <a href="https://github.com/ifellows">@ifellows</a>, <a href="https://github.com/infotroph">@infotroph</a>, <a href="https://github.com/jam1015">@jam1015</a>, <a href="https://github.com/jannikbuhr">@jannikbuhr</a>, <a href="https://github.com/jasonpcasey">@jasonpcasey</a>, <a href="https://github.com/jeffreypullin">@jeffreypullin</a>, <a href="https://github.com/jennybc">@jennybc</a>, <a href="https://github.com/jenren">@jenren</a>, <a href="https://github.com/JenspederM">@JenspederM</a>, <a href="https://github.com/jeonghyunwoo">@jeonghyunwoo</a>, <a href="https://github.com/jjnote">@jjnote</a>, <a href="https://github.com/jmh530">@jmh530</a>, <a href="https://github.com/JohnCoene">@JohnCoene</a>, <a href="https://github.com/joshua-theisen">@joshua-theisen</a>, <a href="https://github.com/JosiahParry">@JosiahParry</a>, <a href="https://github.com/jthomasmock">@jthomasmock</a>, <a href="https://github.com/jwilliman">@jwilliman</a>, <a href="https://github.com/kaneplusplus">@kaneplusplus</a>, <a href="https://github.com/kaybenleroll">@kaybenleroll</a>, <a href="https://github.com/kent37">@kent37</a>, <a href="https://github.com/kiernann">@kiernann</a>, <a href="https://github.com/krlmlr">@krlmlr</a>, <a href="https://github.com/lionel-">@lionel-</a>, <a href="https://github.com/Ljupch0">@Ljupch0</a>, <a href="https://github.com/lymanmark">@lymanmark</a>, <a href="https://github.com/maelle">@maelle</a>, <a href="https://github.com/majazaloznik">@majazaloznik</a>, <a href="https://github.com/mattantaliss">@mattantaliss</a>, <a href="https://github.com/mattwarkentin">@mattwarkentin</a>, <a href="https://github.com/maurolepore">@maurolepore</a>, <a href="https://github.com/md0u80c9">@md0u80c9</a>, <a href="https://github.com/mgirlich">@mgirlich</a>, <a href="https://github.com/MikeEdinger">@MikeEdinger</a>, <a href="https://github.com/mikemahoney218">@mikemahoney218</a>, <a href="https://github.com/mikmart">@mikmart</a>, <a href="https://github.com/mitchelloharawild">@mitchelloharawild</a>, <a href="https://github.com/moodymudskipper">@moodymudskipper</a>, <a href="https://github.com/msberends">@msberends</a>, <a href="https://github.com/msgoussi">@msgoussi</a>, <a href="https://github.com/mstackhouse">@mstackhouse</a>, <a href="https://github.com/MyKo101">@MyKo101</a>, <a href="https://github.com/nacnudus">@nacnudus</a>, <a href="https://github.com/namelessjon">@namelessjon</a>, <a href="https://github.com/ndrewGele">@ndrewGele</a>, <a href="https://github.com/Nicktz">@Nicktz</a>, <a href="https://github.com/npjc">@npjc</a>, <a href="https://github.com/osorensen">@osorensen</a>, <a href="https://github.com/PathosEthosLogos">@PathosEthosLogos</a>, <a href="https://github.com/philipp-baumann">@philipp-baumann</a>, <a href="https://github.com/PMSeitzer">@PMSeitzer</a>, <a href="https://github.com/psychelzh">@psychelzh</a>, <a href="https://github.com/randomgambit">@randomgambit</a>, <a href="https://github.com/riinuots">@riinuots</a>, <a href="https://github.com/romagnolid">@romagnolid</a>, <a href="https://github.com/romainfrancois">@romainfrancois</a>, <a href="https://github.com/rvino">@rvino</a>, <a href="https://github.com/salim-b">@salim-b</a>, <a href="https://github.com/shanepiesik">@shanepiesik</a>, <a href="https://github.com/shannonpileggi">@shannonpileggi</a>, <a href="https://github.com/sharleenw">@sharleenw</a>, <a href="https://github.com/siddharthprabhu">@siddharthprabhu</a>, <a href="https://github.com/simazhi">@simazhi</a>, <a href="https://github.com/skr5k">@skr5k</a>, <a href="https://github.com/skydavis435">@skydavis435</a>, <a href="https://github.com/smingerson">@smingerson</a>, <a href="https://github.com/smithjd">@smithjd</a>, <a href="https://github.com/srnnkls">@srnnkls</a>, <a href="https://github.com/stragu">@stragu</a>, <a href="https://github.com/stufield">@stufield</a>, <a href="https://github.com/tangcxx">@tangcxx</a>, <a href="https://github.com/tdhock">@tdhock</a>, <a href="https://github.com/the-Zian">@the-Zian</a>, <a href="https://github.com/tomhopper">@tomhopper</a>, <a href="https://github.com/topepo">@topepo</a>, <a href="https://github.com/wgrundlingh">@wgrundlingh</a>, <a href="https://github.com/wibeasley">@wibeasley</a>, <a href="https://github.com/william3031">@william3031</a>, <a href="https://github.com/wmoldham">@wmoldham</a>, <a href="https://github.com/wolski">@wolski</a>, <a href="https://github.com/xkdog">@xkdog</a>, <a href="https://github.com/xtimbeau">@xtimbeau</a>, and <a href="https://github.com/yusuzech">@yusuzech</a>.</p>
+</div>
