@@ -8,7 +8,7 @@ categories:
 tags:
   - pdftools
   - datamining
-draft: yes
+draft: 
 ---
 
 ---
