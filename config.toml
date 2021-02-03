@@ -8,14 +8,14 @@ baseurl = "https://asimumba.rbind.io/"
 # Name the theme folder in `themes/`.
 theme = "hugo-graphite"
 
+ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\\.md$"]
 # Enable analytics by entering your Google Analytics tracking ID
 googleAnalytics = "UA-101235795-1"
 
 relativeurls = false
 languageCode = "en-us"
 description = "An opinionated collection of R packages designed for data science."
-disqusShortname = ""
-ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
+disqusShortname = "asimumba"
 # below is critical for non-authors to show up in article listing
 preserveTaxonomyNames = true
 # uncomment the next line to disable listing authors
