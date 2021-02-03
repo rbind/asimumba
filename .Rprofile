@@ -1,8 +1,9 @@
 # source("renv/activate.R")
 options(
   servr.daemon = TRUE, blogdown.yaml.empty = FALSE,
-  blogdown.publishDir = '../aaron-public',  blogdown.author = "Aaron Simumba"
+  blogdown.publishDir = '../aaron-public',  blogdown.author = "Aaron Simumba", blogdown.hugo.version = "0.79.1"
 )
+
 
 local({
   pandoc_path = Sys.getenv('RSTUDIO_PANDOC', NA)
