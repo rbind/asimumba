@@ -5,19 +5,11 @@
     url = "/"
     weight = 1
 [[main]]
-    name = "Packages"
-    url = "/packages/"
-    weight = 2
-[[main]]
     name = "Blog"
     url = "/blog/"
-    weight = 3
+    weight = 2
 [[main]]
     name = "Projects"
     url = "/start/"
-    weight = 4
-[[main]]
-    name = "Tutorials"
-    url = "/learn/"
-    weight = 5
+    weight = 3
 
