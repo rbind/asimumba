@@ -20,7 +20,7 @@ hex_base_url = ".tidyverse.org"
 mainSections = ["articles", "events"]
 
 # options for highlight.js (version, additional languages, and theme)
-disable_highlightjs = "true"
+disable_highlightjs = "false"
 highlightjsVersion = "9.11.0"
 highlightjsCDN = "//cdn.bootcss.com"
 highlightjsLang = ["r", "yaml"]
@@ -102,7 +102,7 @@ MathJaxVersion = "2.7.1"
 [capitalization]
 # Make particular headers "uppercase" or "lowercase"
 # set = false (no quotes) for normal text
-    text_transform = "uppercase"
+    text_transform = false
 
 [accent_color]
     # Used for headers, so should be accessibility-friendly
