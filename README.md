@@ -1,1 +1,4 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/2f8f1ca8-27e3-4781-8493-aace97152622/deploy-status)](https://app.netlify.com/sites/hugo-graphite/deploys) [![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/f946df4c-9047-4151-90e7-02ba625e05d5/deploy-status)](https://app.netlify.com/sites/asimumba/deploys)
+
+# asimumba
+Aaron Simumba's personal website [https://asimumba.rbind.io/](https://asimumba.rbind.io/). I intend to share my journey learning R and Data Science . This website is built using [blogdown](https://github.com/rstudio/blogdown) and hosted using [netlify](https://www.netlify.com/).
