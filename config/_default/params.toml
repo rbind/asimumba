@@ -1,5 +1,5 @@
 # Description for social sharing and search engines.
-description = "The tidyverse is an integrated collection of R packages designed to make data science fast, fluid, and fun."
+description = "A website about the professional developement of Aaron Simumba."
 
 # Enable copy-to-clipboard for all code?
 # Can also enable by content section in _index.md file
@@ -32,9 +32,9 @@ MathJaxVersion = "2.7.1"
 # Logo file relative to static/images/
 # to appear in upper navbar
 [logo]
-    image = ""
+    image = "hugo.png"
     width = 220.85
-    height = 40
+    height = 300
     alt = "Aaron Simumba"
 
 [footer]
@@ -65,25 +65,25 @@ MathJaxVersion = "2.7.1"
 [colors]
     text = "#404040" # black
     # Links
-    link = "#6088A1"
+    link = "#86C232"
     link_hover = "#4254A7"
     # Footer
-    footer_primary = "#3AAFA9"
+    footer_primary = "#19181A"
     footer_text = "white"
     # Backgrounds
     background = "white"
-    home_section_odd = "white"
-    home_section_even = "#fcfcfc"
+    home_section_odd = "#19181A"
+    home_section_even = "#EAE7DC"
     # Menu
-    menu_primary = "#3AAFA9"
-    menu_text = "white"
-    menu_text_active = "#4254A7"
-    menu_text_current = "#4254A7"
+    menu_primary = "#19181A"
+    menu_text = "#86C232"
+    menu_text_active = "#86C232"
+    menu_text_current = "#86C232"
     menu_decorate_current = "none"
     menu_title = "#4254A7" # product name
     menu_title_active = "00000075" # hover product name
-    menu_box_hover = "white"
-    menu_box_active = "#fcfcfc"
+    menu_box_hover = "#8E8D8A"
+    menu_box_active = "#474B4F"
     # Tables
     header_background = "#1a162d80"
     table_row_even = "#fcfcfc"
