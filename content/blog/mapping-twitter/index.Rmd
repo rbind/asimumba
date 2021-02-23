@@ -8,9 +8,6 @@ description: Mapping locations for twitter followers and following
 tags: 
     - Twitter followers
     - twitteR
-output:
-   blogdown::html_page:
-     toc: true
 ---
 ```{r,echo=FALSE}
 knitr::opts_chunk$set(echo = TRUE, tidy = TRUE)
@@ -38,11 +35,8 @@ Authenticating R to have access to your twitter account, the `twitteR` package h
 
 ```{r, eval=FALSE}
 setup_twitter_oauth(consumer_key = "insert key",
-                    
                     consumer_secret ="insert key", 
-                    
                     access_token ="insert token key",
-                    
                     access_secret = "insert key"
                     )
 ```
