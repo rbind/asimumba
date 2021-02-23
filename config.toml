@@ -1,5 +1,5 @@
 # Title of your site
-title = ""
+title = "R,Data Science and Data Engineering"
 
 # The URL of your site.
 # End your URL with a `/` trailing slash, e.g. `https://example.com/`.
@@ -14,7 +14,7 @@ googleAnalytics = "UA-101235795-1"
 
 relativeurls = false
 languageCode = "en-us"
-description = "An opinionated collection of R packages designed for data science."
+description = ""
 disqusShortname = "asimumba"
 # below is critical for non-authors to show up in article listing
 preserveTaxonomyNames = true
