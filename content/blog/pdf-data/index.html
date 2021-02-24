@@ -8,27 +8,17 @@ categories:
   - Rmarkdown
 tags:
   - pdf
-  - Java jdk
+  - Java-jdk
   - tabulizer
 description: Bringing PDF presented data back to life.
 slug: Breathing-life-back-into-PDF-presented-Data
-fig_width: 2
-fig_height: 2
-bigimg: [{src: "/img/file.jpg", desc: "Files"}]
-output:
-   blogdown::html_page:
-     toc: true
+photo:
+  url: https://unsplash.com/photos/RX_0vwSPiWs
+  author: Austin Distel
 ---
 
 <script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
 
-<div id="TOC">
-<ul>
-<li><a href="#installation">Installation</a></li>
-<li><a href="#tidying-the-data">Tidying the data</a></li>
-<li><a href="#welcome-to-the-tidyverse-universe">Welcome to the tidyverse universe</a></li>
-</ul>
-</div>
 
 <p>It is almost not surprising to find most of the summarised data is presented in the form of a report - whose format is mainly Portable Document Format (PDF). The challenge is when you would like to access that data in a dynamic format and form - where it can be analysed, reformatted and reshaped to your desire; a requirement which is hard, if not impossible to achieve with data presented in a PDF report. Trying to do so would be like wishing to extract water from a rock, which is an endeavour in futility.</p>
 <p>The good news is, technology seem to run on a brain of its own. While one side of the technology spectrum impedes, another end liberate. One such solution to extracting the dead and static PDF presented data, is to turn to the powerful and versatile R package, <code>tabulizer</code>. The <a href="https://github.com/ropensci/tabulizer">tabulizer</a> package is an R wrapper for the powerful PDF extractor Java library <a href="https://github.com/tabulapdf/tabula-java/">Tabula</a>. This package allows one to extract with ease, data presented in tables in a PDF document. For as long as the data is in a clean and uncluttered format. The <code>extract_tables()</code> function will try to guess the delimiters for the data and extract the data in the format which maintains close to the original data outline.</p>
@@ -111,11 +101,9 @@ cso_column &lt;- cso_table[[1]]
 <p>After gathering the data from the columns to rows, the second issue is to index the numbers by the corresponding provinces. This is achieved by replicating the provinces to span the length of the numbers. Combining the row names with their corresponding numbers completes our simple data extraction exercise.</p>
 <pre class="r"><code>cso_data &lt;- cso_data %&gt;% 
   as.tibble() # converting to a tibble</code></pre>
-<pre><code>#&gt; Warning: `as.tibble()` is deprecated as of tibble 2.0.0.
+<pre><code>#&gt; Warning: `as.tibble()` was deprecated in tibble 2.0.0.
 #&gt; Please use `as_tibble()` instead.
-#&gt; The signature and semantics have changed, see `?as_tibble`.
-#&gt; This warning is displayed once every 8 hours.
-#&gt; Call `lifecycle::last_warnings()` to see where this warning was generated.</code></pre>
+#&gt; The signature and semantics have changed, see `?as_tibble`.</code></pre>
 <pre class="r"><code>cso_provincial &lt;- cso_data %&gt;% 
   filter(sex == &quot;Total&quot;) %&gt;% 
   select(`2011`:`2035`) %&gt;% 

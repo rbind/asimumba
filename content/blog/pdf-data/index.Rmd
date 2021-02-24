@@ -8,16 +8,13 @@ categories:
   - Rmarkdown
 tags:
   - pdf
-  - Java jdk
+  - Java-jdk
   - tabulizer
 description: Bringing PDF presented data back to life.
 slug: Breathing-life-back-into-PDF-presented-Data
-fig_width: 2
-fig_height: 2
-bigimg: [{src: "/img/file.jpg", desc: "Files"}]
-output:
-   blogdown::html_page:
-     toc: true
+photo:
+  url: https://unsplash.com/photos/RX_0vwSPiWs
+  author: Austin Distel
 ---
 ```{r,echo=FALSE}
 knitr::opts_chunk$set(echo = TRUE, eval = FALSE, comment = "#>")

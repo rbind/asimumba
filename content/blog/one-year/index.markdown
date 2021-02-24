@@ -11,8 +11,8 @@ tags:
   - git
   - github
 photo:
-  author: Rock'n Roll Monkey
-  url: https://unsplash.com/photos/R4WCbazrD1g
+  author: Gaelle Marcel
+  url: https://unsplash.com/photos/vrkSVpOwchk
 ---
 
 The 26 August 2017  marks exactly one year since embarking on learning the R programming language. A year ago I had neither the foresight nor will strength of believing I would b this engrossed in the new found love for programming. But it didn't take long before I found myself spending at least an hour a day playing with different skills and knowledge I had acquired. Coming from the background of playing with VBA in Excel. I got hooked every time I discovered I could do something more efficiently and, less painful in R than other data analysis packages I had used.

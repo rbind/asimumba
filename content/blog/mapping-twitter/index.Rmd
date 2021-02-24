@@ -8,6 +8,9 @@ description: Mapping locations for twitter followers and following
 tags: 
     - Twitter followers
     - twitteR
+photo:
+  url: https://unsplash.com/photos/92PmjawKUfs
+  author: Apollo
 ---
 ```{r,echo=FALSE}
 knitr::opts_chunk$set(echo = TRUE, tidy = TRUE)

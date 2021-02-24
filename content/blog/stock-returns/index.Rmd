@@ -4,7 +4,7 @@ author: Aaron Simumba
 date: "2017-03-17"
 slug: portfolio-analysis
 photo:
-  url: returns.jpg
+  url: https://unsplash.com/photos/VP4WmibxvcY
   author: Jamie Street
 categories: [tutorial] 
 tags: [stocks, goog, apple, msft]

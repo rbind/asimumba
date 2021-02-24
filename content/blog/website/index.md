@@ -13,7 +13,9 @@ tags:
   - github
   - blog
 description: "A brief introduction to my blogging journey, and how I crafted my personal website"
-draft: false
+photo:
+    url: https://unsplash.com/photos/bs2Ba7t69mM
+    author: Ben Kolde
 ---
 This post was originally submitted to the [Rbind support](https://support.rbind.io/2018/02/19/introduction-to-aaron-simumba-website/) website.
 ***

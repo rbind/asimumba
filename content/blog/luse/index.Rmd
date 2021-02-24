@@ -9,11 +9,9 @@ tags:
    - stock returns
    - Zambia capital market
 description: LuSE performance overview
-fig_width: 1
-fig_height: 1
-output:
-   blogdown::html_page:
-     toc: true
+photo:
+  author: Markus Spiske
+  url: https://unsplash.com/photos/5gGcn2PRrtc
 ---
 
 ```{r,echo=FALSE}
