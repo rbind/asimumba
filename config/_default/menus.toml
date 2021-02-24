@@ -10,6 +10,13 @@
     weight = 2
 [[main]]
     name = "Projects"
-    url = "/start/"
+    url = "/project/"
     weight = 3
-
+[[main]]
+    name = "Learn"
+    url = "/start/"
+    weight = 4
+[[main]]
+    name = "Adventure"
+    url = "/adventure/"
+    weight = 5
