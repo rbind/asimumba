@@ -66,7 +66,7 @@ MathJaxVersion = "2.7.1"
     text = "#404040" # black
     # Links
     link = "#86C232"
-    link_hover = "#4254A7"
+    link_hover = "#AC3B61"
     # Footer
     footer_primary = "#19181A"
     footer_text = "white"
@@ -96,8 +96,8 @@ MathJaxVersion = "2.7.1"
     # Import a Google font and styles, e.g. "@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');"
     # import = "@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');" 
     # font-family = "Lato"
-    import = "@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');"
-    font-family = "Libre Baskerville"
+    import = "@import url('https://fonts.googleapis.com/css2?family=Mulish&display=swap');"
+    font-family = "mulish"
 
 [capitalization]
 # Make particular headers "uppercase" or "lowercase"
